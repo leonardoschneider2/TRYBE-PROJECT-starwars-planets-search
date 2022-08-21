@@ -9,7 +9,6 @@ function TableWars() {
     .filter((e) => e.name.toLowerCase()
       .includes((filterName.filterByName.name).toLowerCase()));
 
-  console.log(planetsFilteredByName);
   // aplicando os filtros numéricos
   const data = filterNumeric.filterByNumericValues
     .reduce((acc, e) => acc.filter((planet) => {
@@ -66,13 +65,29 @@ function TableWars() {
             } = planet;
             return (
               <tr className="table-line" key={ planet.name }>
-                <td className="table-data">{ climate }</td>
-                <td className="table-data">{ created }</td>
-                <td className="table-data">{ diameter }</td>
-                <td className="table-data">{ edited }</td>
-                <td className="table-data">{ films }</td>
+                <td className="table-data">
+                  { climate }
+                </td>
+                <td className="table-data">
+                  { created }
+                </td>
+                <td className="table-data">
+                  { diameter }
+                </td>
+                <td className="table-data">
+                  { edited }
+                </td>
+                <td className="table-data">
+                  {
+                    films.map((a, i) => (
+                      <a key={ i } href={ a } target="_blank" rel="noreferrer">{ a }</a>
+                    ))
+                  }
+                </td>
                 <td className="table-data">{ gravity }</td>
-                <td className="table-data">{ name }</td>
+                <td className="table-data" data-testid="planet-name">
+                  { name }
+                </td>
                 <td className="table-data">{ orbitalPeriod }</td>
                 <td className="table-data">{ population }</td>
                 <td className="table-data">{ rotationPeriod }</td>

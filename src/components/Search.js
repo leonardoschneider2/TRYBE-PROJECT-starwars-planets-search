@@ -5,7 +5,6 @@ function Search() {
   const {
     filterName,
     setFilterName,
-    filterNumeric,
     setFilterNumeric,
     columnOptions,
     setColumn,
@@ -14,6 +13,8 @@ function Search() {
 
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
+
+  const disabled = columnOptions.length <= 0;
 
   return (
     <div className="search">
@@ -29,9 +30,9 @@ function Search() {
           onChange={ ({ target }) => setColumn(target.value) }
         >
           {
-            columnOptions.map((option) => (
+            columnOptions.map((option, i) => (
               <option
-                key={ option }
+                key={ i }
               >
                 { option }
               </option>
@@ -56,15 +57,12 @@ function Search() {
         <button
           type="button"
           data-testid="button-filter"
+          disabled={ disabled }
           onClick={ () => setFilterNumeric({ column, comparison, value }) }
         >
           Filtrar
         </button>
       </div>
-      {
-        filterNumeric.filterByNumericValues
-          .map((e, i) => <h3 key={ i }>{ `${e.column} ${e.comparison} ${e.value}` }</h3>)
-      }
     </div>
   );
 }

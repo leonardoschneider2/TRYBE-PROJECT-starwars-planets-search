@@ -13,9 +13,10 @@ function StarWarsProvider({ children }) {
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
   const [column, setColumn] = useState('population');
+  const [sortOrdenator, setSortOrdenador] = useState({
+    order: { column: 'population', sort: 'ASC' } });
 
   useEffect(() => {
-    console.log('option', columnOptions[0]);
     setColumn(columnOptions[0]);
   }, [columnOptions]);
 
@@ -34,8 +35,61 @@ function StarWarsProvider({ children }) {
     });
   };
 
+  const removeFilter = (removedFilter) => {
+    const value = filterNumeric.filterByNumericValues
+      .filter((eachNumericFilter) => {
+        const numericOne = JSON.stringify(eachNumericFilter);
+        const numericTwo = JSON.stringify(removedFilter);
+        return numericOne !== numericTwo;
+      });
+    // now I need to get the value of column item to columnOptions again
+    setColumnOptions([...columnOptions.concat(removedFilter.column)]);
+
+    // now I need to filter the removedFilter from filterNumeric
+    setFilterNumeric({
+      filterByNumericValues: [
+        ...value,
+      ],
+    });
+  };
+
+  const removeAllFilters = () => {
+    setColumnOptions([
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+    ]);
+    setFilterNumeric({
+      filterByNumericValues: [] });
+  };
+
+  const remakePlanetsWithSort = (columnSort, sort) => {
+    planets.results.sort((a, b) => {
+      const neg = -1;
+      const compareOne = a[columnSort];
+      if (compareOne === 'unknown') return 1;
+      const compareTwo = b[columnSort];
+      if (compareTwo === 'unknown') return neg;
+      console.log(sort);
+      if (sort === 'ASC') {
+        return (parseFloat(compareOne) > parseFloat(compareTwo)) ? 1 : neg;
+      }
+      return (parseFloat(compareOne) > parseFloat(compareTwo)) ? neg : 1;
+    });
+  };
+
+  const getNewOrdenador = (key, model) => {
+    setSortOrdenador({
+      order: {
+        column: key,
+        sort: model,
+      },
+    });
+    remakePlanetsWithSort(key, model);
+  };
+
   // my context
   const context = {
+    getNewOrdenador,
+    sortOrdenator,
     planets,
     setPlanets,
     filterName,
@@ -44,6 +98,9 @@ function StarWarsProvider({ children }) {
     setFilterNumeric: changeFilterNumeric,
     columnOptions,
     setColumn,
+    setColumnOptions,
+    removeFilter,
+    removeAllFilters,
     column,
   };
 
