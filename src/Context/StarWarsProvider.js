@@ -68,7 +68,6 @@ function StarWarsProvider({ children }) {
       if (compareOne === 'unknown') return 1;
       const compareTwo = b[columnSort];
       if (compareTwo === 'unknown') return neg;
-      console.log(sort);
       if (sort === 'ASC') {
         return (parseFloat(compareOne) > parseFloat(compareTwo)) ? 1 : neg;
       }
