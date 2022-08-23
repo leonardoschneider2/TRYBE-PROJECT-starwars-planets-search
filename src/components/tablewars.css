@@ -1,6 +1,9 @@
 :root {
+
   --table-border: 1px gray solid;
-  --table-item-height: 50px;  
+
+  --table-item-height: 50px;
+
   --table-item-width: 250px;
 }
 
@@ -10,20 +13,20 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  max-height: 80vh;
   max-width: 90vw;
   min-height: 80vh;
-  max-height: 80vh;
   overflow-x: scroll;
   overflow-y: scroll;
 }
 
-.table-header, .table-data  {
+.table-header, .table-data {
   border: var(--table-border);
-  min-width: var(--table-item-width);
   max-width: var(--table-item-width);
   min-height: var(--table-item-height);
+  min-width: var(--table-item-width);
   overflow: hidden;
   padding: 10px;
-  word-wrap: break-word;
   text-align: center;
+  word-wrap: break-word;
 }

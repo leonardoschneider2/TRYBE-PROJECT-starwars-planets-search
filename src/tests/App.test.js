@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import App from '../App';
 import planetsMockedValue from './helpers/dataPlanets';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 
 describe('Testando a tabela do starWars: ', () => {
   beforeEach(() => {
@@ -107,12 +108,14 @@ describe('Testando a tabela do starWars: ', () => {
     const slt = screen.getAllByRole('combobox')[2];
     const btn = screen.getByRole('button', { name: /ordenar/i });
 
-    userEvent.selectOptions(slt, 'surface_water');
-    userEvent.click(asc);
-    userEvent.click(btn);
-
-    userEvent.click(desc);
-    userEvent.click(btn);
+    act(() => {
+      userEvent.selectOptions(slt, 'surface_water');
+      userEvent.click(asc);
+      userEvent.click(btn);
+  
+      userEvent.click(desc);
+      userEvent.click(btn);
+    })
 
     screen.logTestingPlaygroundURL();
   });
